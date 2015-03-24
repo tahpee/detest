@@ -14,4 +14,15 @@ class Project(models.Model):
     options = models.TextField()
 
     def __str__(self):
-        return "%s (%d)" % (self.name, self.id)
+        return "%s (%d)" % (self.prefix, self.id)
+
+
+class Node_Types(models.Model):
+    description = models.CharField(max_length=100)
+
+
+class Nodes_Hierarchy(models.Model):
+    name = models.CharField(max_length=100)
+    parent_id = models.IntegerField()
+    node_type_id = models.ForeignKey(Node_Types)
+    node_order = models.IntegerField()
