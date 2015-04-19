@@ -15,6 +15,13 @@ def index(request):
     return render(request, 'detest_ui/index.html', context)
 
 
+@login_required
+def project_list(request):
+    logger.debug("Project List")
+    context = {'projects': Project.objects.all()}
+    return render(request, 'detest_ui/projects.html', context)
+
+
 def buttons(request):
     logger.debug("buttons")
     # context = {'projects': Project.objects.all()}
@@ -45,10 +52,10 @@ def login_view(request):
         return render_to_response('detest_ui/login.html', context)
 
 
-def logout_user(request):
-    logout(request)
-    return redirect("/login/")
-
+@login_required
+def project_view(request, project):
+    context = {}
+    return render(request, 'detest_ui/project.html', context)
 
 def test():
     logger.debug("Hello")

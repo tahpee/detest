@@ -9,7 +9,7 @@ urlpatterns = patterns('',
 
                        url(r'', include('detest_ui.urls')),
                        url(r'^admin/', include(admin.site.urls)),
-                       # url(r'^login/$', login),
-                       # url(r'^logout/$', logout),
-                       # url(r'^', include('django.contrib.auth.urls')),
+                       url(r'^login/$', 'django.contrib.auth.views.login'),
+                       url(r'^logout/$', 'django.contrib.auth.views.logout'),
+                       url(r'^', include('django.contrib.auth.urls')),
                        )
