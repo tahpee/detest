@@ -3,6 +3,7 @@ from detest_ui.models import Project
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib import auth
+from django.views import generic
 import logging
 
 logger = logging.getLogger(__name__)
@@ -57,5 +58,7 @@ def project_view(request, project):
     context = {}
     return render(request, 'detest_ui/project.html', context)
 
-def test():
-    logger.debug("Hello")
+
+class ProjectView(generic.DetailView):
+    model = Project
+    template_name = 'detest_ui/project_view.html'

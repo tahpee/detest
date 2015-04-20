@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <!-- Page-Level Plugin CSS - Tables -->
+    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{ project.name }}</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Project Settings
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <strong>Name</strong>
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-11">
+                            {{ project.name }}
+                        </div>
+                        <!-- /.col-lg-9 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <strong>ID</strong>
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-11">
+                            {{ project.id }}
+                        </div>
+                        <!-- /.col-lg-9 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <strong>Prefix</strong>
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-11">
+                            {{ project.prefix }}
+                        </div>
+                        <!-- /.col-lg-9 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <strong>Active</strong>
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-11">
+                            {{ project.active }}
+                        </div>
+                        <!-- /.col-lg-9 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <strong>Public</strong>
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-11">
+                            {{ project.public }}
+                        </div>
+                        <!-- /.col-lg-9 -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <strong>Notes</strong>
+                        </div>
+                        <!-- /.col-lg-3 -->
+                        <div class="col-lg-11">
+                            {{ project.notes|safe }}
+                        </div>
+                        <!-- /.col-lg-9 -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}
