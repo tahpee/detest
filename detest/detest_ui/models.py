@@ -9,10 +9,19 @@ class Project(models.Model):
     active = models.BooleanField(default=True)
     public = models.BooleanField(default=False)
 
+    def __str__(self):
+        return "<Project name:%s, prefix:%s>" % (self.name, self.prefix)
+
 
 class Testsuite(models.Model):
     name = models.CharField(max_length=45)
     details = models.TextField()
+    project_id = models.ForeignKey(Project)
+
+
+class Testsuite_CT(models.Model):
+    parent_id = models.ForeignKey(Testsuite, related_name="parent_testsuite")
+    child_id = models.ForeignKey(Testsuite, related_name="child_testsuite")
 
 
 class TCPriority(models.Model):
@@ -27,22 +36,9 @@ class TCExecution_Type(models.Model):
     execution_type = models.CharField(max_length=45)
 
 
-# class user(models.Model):
-#   id = models.IntegerField()
-#   password = models.CharField(max_length=128)
-#   last_login = models.DateTimeField()
-#   is_superuser = models.SmallIntegerField()
-#   username = models.CharField(max_length=30)
-#   first_name = models.CharField(max_length=30)
-#   last_name = models.CharField(max_length=30)
-#   email = models.CharField(max_length=75)
-#   is_staff = models.SmallIntegerField()
-#   is_active = models.SmallIntegerField()
-#   date_joined = models.DateTimeField()
-
-
 class Testcase(models.Model):
     external_id = models.IntegerField()
+    testsuite_id = models.ForeignKey(Testsuite)
     version = models.IntegerField()
     summary = models.TextField()
     preconditions = models.TextField()
@@ -55,17 +51,6 @@ class Testcase(models.Model):
     modified = models.DateTimeField()
     previous_version_id = models.ForeignKey('self')
     requirement = models.CharField(max_length=100)
-
-
-class Node_Type(models.Model):
-    description = models.CharField(max_length=100)
-
-
-class Node_Hierarchy(models.Model):
-    node_type_id = models.ForeignKey(Node_Type)
-    parent_id = models.IntegerField()
-    child_id = models.IntegerField()
-    node_order = models.IntegerField()
 
 
 class Teststep(models.Model):
