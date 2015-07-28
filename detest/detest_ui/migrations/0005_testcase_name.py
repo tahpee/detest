@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('detest_ui', '0006_remove_project_name'),
+        ('detest_ui', '0004_testcase_estimate'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='project',
+            model_name='testcase',
             name='name',
-            field=models.CharField(default='NULL', max_length=100),
+            field=models.CharField(default='', max_length=100),
             preserve_default=False,
         ),
     ]

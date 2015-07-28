@@ -7,14 +7,14 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('detest_ui', '0001_initial'),
+        ('detest_ui', '0003_testcase_modified_by'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='projects',
-            name='name',
-            field=models.CharField(default='Need a name', max_length=100),
+            model_name='testcase',
+            name='estimate',
+            field=models.IntegerField(default=0),
             preserve_default=False,
         ),
     ]
