@@ -109,10 +109,10 @@ class Command(BaseCommand):
             tcid = tcrow[0]
             name = tcrow[1]
             versioncursor = self.db.cursor()
-                   #                      0               1        2        3          4            5           6                7              8                    9           10      11
+            #                             0               1        2        3          4            5           6                7              8                    9           10      11
             versioncursor.execute("SELECT tc_external_id, version, summary, author_id, creation_ts, updater_id, modification_ts, preconditions, nodes_hierarchy.name, importance, status, execution_type from tcversions inner join nodes_hierarchy on tcversions.id = nodes_hierarchy.id INNER JOIN node_types on nodes_hierarchy.node_type_id = node_types.id where nodes_hierarchy.parent_id = %d AND node_types.description = 'testcase_version'" % (tcid))
             for versionrow in versioncursor.fetchall():
-                print "\tImporting testcase %s" % (name)
+                print "\tImporting testcase %s->%s" % (detest_testsuite, name)
                 tcpriority = TCPriority.objects.filter(id=versionrow[9])[0]
                 tcstatus = TCStatus.objects.filter(id=versionrow[10])[0]
                 tcexecution_type = TCExecution_Type.objects.filter(id=versionrow[11])[0]
@@ -130,7 +130,6 @@ class Command(BaseCommand):
                               created=created, modified=modified)
                 tc.save()
 
-
     def import_testsuites(self, testlink_testproject_id, detest_project, parent_testlink_testsuite_id=None, parent_detest_testsuite=None):
         cursor = self.db.cursor()
         cursor.execute("SELECT count(*) FROM testsuites INNER JOIN nodes_hierarchy on testsuites.id = nodes_hierarchy.id and nodes_hierarchy.parent_id = %d" % (testlink_testproject_id))
@@ -144,8 +143,8 @@ class Command(BaseCommand):
             print "Importing testsuite %s->%s" % (detest_project.name, row[1])
             ts = Testsuite(name=row[1], details=row[2], project=detest_project)
             ts.save()
+            # self.import_testcases(row[0], ts)
             self.import_testsuites(testlink_testproject_id, detest_project, row[0], ts)
-            self.import_testcases(row[0], ts)
 
     def import_users(self):
         # Import users, don't overwrite any existing users but if the username matches
@@ -174,7 +173,6 @@ class Command(BaseCommand):
         dbname = options['dbname']
         dbuser = options['dbuser']
         dbpasswd = options['dbpasswd']
-        users_import = False,
         all_projects_import = True
 
         print self.banner

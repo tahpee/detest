@@ -10,13 +10,16 @@ class Project(models.Model):
     public = models.BooleanField(default=False)
 
     def __str__(self):
-        return "<Project name:%s, prefix:%s>" % (self.name, self.prefix)
+        return "%s: %s" % (self.prefix, self.name)
 
 
 class Testsuite(models.Model):
     name = models.CharField(max_length=45)
     details = models.TextField()
     project = models.ForeignKey(Project)
+
+    def __str__(self):
+        return "%s" % (self.name)
 
 
 class Testsuite_CT(models.Model):
@@ -27,13 +30,22 @@ class Testsuite_CT(models.Model):
 class TCPriority(models.Model):
     priority = models.CharField(max_length=45)
 
+    def __str__(self):
+        return "%d: %s" % (self.id, self.priority)
+
 
 class TCStatus(models.Model):
     status = models.CharField(max_length=45)
 
+    def __str__(self):
+        return "%d: %s" % (self.id, self.status)
+
 
 class TCExecution_Type(models.Model):
     execution_type = models.CharField(max_length=45)
+
+    def __str__(self):
+        return "%d: %s" % (self.id, self.execution_type)
 
 
 class Testcase(models.Model):
@@ -55,7 +67,7 @@ class Testcase(models.Model):
     estimate = models.IntegerField(null=True)
 
     def __str__(self):
-        return "<Testcase: name=%s>" % (self.name)
+        return "%d (%d): %s->%s" % (self.external_id, self.id, self.testsuite, self.name)
 
 
 class Teststep(models.Model):

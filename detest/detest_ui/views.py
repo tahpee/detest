@@ -9,17 +9,35 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def default_context(request):
+    context = {'projects': Project.objects.all().order_by('name')}
+    request.session['current_project'] = project
+    if project in [x.name for x in context['projects']]:
+        request.session['current_project'] = project
+    else:
+        request.session['current_project'] = Project.objects.all().order_by('name')[0]
+    context['current_project'] = project
+    return context
+
+
 @login_required
 def index(request):
     logger.debug("index")
-    context = {'projects': Project.objects.all()}
+    context = default_context(request)
     return render(request, 'detest_ui/index.html', context)
+
+
+@login_required
+def project(request, project):
+    context = default_context(request)
+    return render(request, 'detest_ui/project_dashboard.html', context)
 
 
 @login_required
 def project_list(request):
     logger.debug("Project List")
-    context = {'projects': Project.objects.all()}
+    context = default_context(request)
+    print context
     return render(request, 'detest_ui/projects.html', context)
 
 
@@ -55,7 +73,7 @@ def login_view(request):
 
 @login_required
 def project_view(request, project):
-    context = {}
+    context = default_context(request)
     return render(request, 'detest_ui/project.html', context)
 
 
