@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
-from detest_ui.models import Project
+from detest_ui.models import Project, Testsuite
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
 from django.contrib import auth
@@ -11,13 +11,21 @@ logger = logging.getLogger(__name__)
 
 def default_context(request, project=None):
     context = {'projects': Project.objects.all().order_by('name')}
-    request.session['current_project'] = project
-    if project in [x.name for x in context['projects']]:
-        request.session['current_project'] = project
+    if project is not None and project in [x.name for x in context['projects']]:
+        context['current_project'] = project
     else:
-        request.session['current_project'] = Project.objects.all().order_by('name')[0].name
-    context['current_project'] = request.session['current_project']
+        context['current_project'] = request.session.get('current_project', None)
+        if context['current_project'] is None:
+            context['current_project'] = Project.objects.all().order_by('name')[0].name
+    print "2: context['current_project'] = %s" % (context['current_project'])
     return context
+
+
+def project_testsuites(project_name):
+    print "project_testsuites::project_name = %s" % (project_name)
+    testsuites = Testsuite.objects.all().order_by('name').filter(project__name=project_name)
+    print testsuites[0].project
+    return testsuites
 
 
 @login_required
@@ -26,9 +34,20 @@ def index(request):
     context = default_context(request)
     return render(request, 'detest_ui/index.html', context)
 
-# @login_required
-# def dashboard(request, project=None):
-    # context = default_context(request,
+
+@login_required
+def design_top(request, project):
+    context = default_context(request, project)
+    context['testsuites'] = project_testsuites(context['current_project'])
+    print context
+    return render(request, 'detest_ui/design_top.html', context)
+
+
+@login_required
+def dashboard(request, project=None):
+    context = default_context(request, project)
+    return render(request, 'detest_ui/project_dashboard.html', context)
+
 
 @login_required
 def project(request, project):
