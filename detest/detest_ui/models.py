@@ -14,7 +14,7 @@ class Project(models.Model):
 
 
 class Testsuite(models.Model):
-    name = models.CharField(max_length=45)
+    name = models.CharField(max_length=100)
     details = models.TextField()
     project = models.ForeignKey(Project)
 

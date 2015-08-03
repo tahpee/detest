@@ -155,14 +155,16 @@ class Command(BaseCommand):
         cursor.execute("SELECT * from users")
         self.usermap = {}
         for row in cursor.fetchall():
+            print row
             user = User(username=row[1], email=row[4], first_name=row[5], last_name=row[6], is_active=row[9])
             user.set_password("Password1")
+            print user
             existing_users = User.objects.filter(username=row[1])
             if len(existing_users) > 0:
                 self.usermap[row[0]] = existing_users[0]
             else:
                 self.usermap[row[0]] = user
-                print "\tImporting user %s" % (user.name)
+                print "\tImporting user %s" % (user)
                 user.save()
 
     def prepare(self):

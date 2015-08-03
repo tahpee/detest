@@ -7,7 +7,7 @@ urlpatterns = patterns('',
                        url(r'^project/(?P<project>[\w\s]+)/$', views.project, name='project'),
                        url(r'^projects$', views.project_list, name='project_list'),
                        url(r'^buttons/$', views.buttons, name='buttons'),
-                       url(r'^project/(?P<pk>\d+)/$', views.ProjectView.as_view(), name='project'),
+                       url(r'^project_details/(?P<pk>\d+)/$', views.ProjectView.as_view(), name='project'),
                        # url(r'^login/$', views.login_view),
                        # url(r'^logout/$', views.logout_user),
                        )
