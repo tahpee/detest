@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <!-- Page-Level Plugin CSS - Tables -->
+    <link href="static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div id="page-wrapper">
+    <div class="row">
+        <form action="/admin/new_project" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    {% endblock %}
+
+    {% block scripts %}
+    <!-- Page-Level Plugin Scripts - Tables -->
+    <script src="static/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="static/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+$(document).ready(function() {
+        $('#table_project_list').dataTable();
+        });
+    </script>
+    {% endblock %}

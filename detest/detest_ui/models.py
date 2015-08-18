@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Project(models.Model):
     name = models.CharField(max_length=45)
-    notes = models.TextField(default="")
+    notes = models.TextField(default="", blank=True)
     prefix = models.CharField(max_length=45)
     active = models.BooleanField(default=True)
     public = models.BooleanField(default=False)
