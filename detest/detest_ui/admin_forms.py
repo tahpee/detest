@@ -6,7 +6,7 @@ from django import forms
 class ProjectForm(ModelForm):
     class Meta:
         model = models.Project
-        fields = ['name', 'notes', 'prefix', 'active', 'public']
+        fields = ['name', 'prefix', 'active', 'public', 'notes']
 
 class DeleteProjectForm(forms.Form):
     project_id = forms.IntegerField(label="Project ID")

@@ -4,7 +4,7 @@ from detest_ui import common
 from detest_ui import admin_forms
 from detest_ui.models import Project
 from django.contrib.auth.decorators import login_required
-from django.views import generic
+# from django.views import generic
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,12 +40,8 @@ def new_project(request):
 @login_required
 def project_view(request, project):
     context = common.default_context(request)
-    return render(request, 'detest_ui/project.html', context)
-
-
-class ProjectView(generic.DetailView):
-    model = Project
-    template_name = 'detest_ui/admin_project_view.html'
+    context['project'] = Project.objects.all().filter(id=project)[0]
+    return render(request, 'detest_ui/admin_project_view.html', context)
 
 
 def delete_project(request):
