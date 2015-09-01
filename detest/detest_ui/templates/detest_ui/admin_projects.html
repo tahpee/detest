@@ -1,21 +1,18 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block css %}
-    <!-- Page-Level Plugin CSS - Tables -->
-    <link href="static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="{% static "css/plugins/dataTables/dataTables.bootstrap.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div id="page-wrapper">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="row header">
+        <div class="col-md-12">
+            <a href="{% url 'new_project' %}"><button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Create New</button></a>
             <h1>Projects</h1>
         </div>
-        <!-- /.col-md-8 -->
-        <div class="col-md-4">
-            <p> </p>  <!-- Hack to get the button to move down from the navbar. I need to learn CSS... -->
-            <a href="/admin/new_project"><button type="button" class="btn btn-primary pull-right">Create New Project</button></a>
-        </div>
+        <!-- /.col-md-12 -->
     </div>
     <!-- /.row -->
     <div class="row">
@@ -34,15 +31,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for project in projects %}
-                            <tr>
-                                <td><a href="project_details/{{ project.id }}">{{ project.name }}</a></td>
-                                <td>{{ project.prefix }}</td>
-                                <td>{{ project.active }}</td>
-                                <td>{{ project.public }}</td>
-                                <td>{{ project.tc_counter }}</td>
-                            </tr>
-                            {% endfor %}
+                                {% for project in projects %}
+                                <tr>
+                                    <td><a href="{% url 'project_details' project.id %}">{{ project.name }}</a></td>
+                                    <td>{{ project.prefix }}</td>
+                                    <td>{{ project.active }}</td>
+                                    <td>{{ project.public }}</td>
+                                    <td>{{ project.tc_counter }}</td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -55,17 +52,17 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
+</div>
 
     {% endblock %}
 
     {% block scripts %}
     <!-- Page-Level Plugin Scripts - Tables -->
-    <script src="static/js/plugins/dataTables/jquery.dataTables.js"></script>
-    <script src="static/js/plugins/dataTables/dataTables.bootstrap.js"></script>
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script src="{% static "js/plugins/dataTables/jquery.dataTables.js" %}"></script>
+    <script src="{% static "js/plugins/dataTables/dataTables.bootstrap.js" %}"></script>
     <script>
-$(document).ready(function() {
-        $('#table_project_list').dataTable();
+        $(document).ready(function() {
+            $('#table_project_list').dataTable();
         });
     </script>
     {% endblock %}

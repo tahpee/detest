@@ -1,28 +1,20 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block css %}
     <!-- Page-Level Plugin CSS - Tables -->
-    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="{% static "css/plugins/dataTables/dataTables.bootstrap.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <div id="page-wrapper">
-    <div class="row">
-        <div class="col-md-8">
-            <h1>{{ project.name }}</h1>
-        </div>
-        <!-- /.col-md-8 -->
-        <div class="col-md-1 col-md-offset-2">
-            <p> </p>  <!-- Hack to get the button to move down from the navbar. I need to learn CSS... -->
-            <a href="/admin/edit_project/{{ project.id }}"><button type="button" class="btn btn-primary">Edit Project</button></a>
-        </div>
-        <!-- /.col-md-1 -->
-        <div class="col-md-1">
-            <p> </p>  <!-- Hack to get the button to move down from the navbar. I need to learn CSS... -->
+    <div class="row header">
+        <div class="col-md-12">
             <!-- Button trigger modal -->
-            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteProjectModal">
+            <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteProjectModal">
                 Delete Project
             </button>
+            <a href="/admin/edit_project/{{ project.id }}"><button type="button" class="btn btn-primary pull-right">Edit Project</button></a>
             <!-- Modal -->
             <div class="modal fade" id="deleteProjectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -37,7 +29,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <form action="/admin/delete_project" method="POST">
+                            <form action="{% url 'delete_project' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="project_id" value="{{ project.id }}">
                                 <input type="submit" value="Delete" class="btn btn-danger"/>
@@ -49,8 +41,9 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal -->
+            <h1>{{ project.name }}</h1>
         </div>
-        <!-- /.col-md-1 -->
+        <!-- /.col-md-8 -->
     </div>
     <!-- /.row -->
     <div class="row">
